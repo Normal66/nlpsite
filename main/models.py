@@ -38,7 +38,8 @@ class CategoryManager(models.Manager):
 
 
 class m_Category(models.Model):
-    object = CategoryManager()
+#    object = CategoryManager()
+    published = CategoryManager()
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, unique=True)
     image = models.ImageField(upload_to='category/%Y/%m/%d', blank=True)
@@ -64,10 +65,11 @@ class TreningManager(models.Manager):
 
 
 class m_Trening(models.Model):
-    object = TreningManager()
+#    object = TreningManager()
+    published = TreningManager()
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, unique=True)
-    category = models.ForeignKey(m_Category, on_delete=models.CASCADE, related_name='category')
+    category = models.ForeignKey(m_Category, on_delete=models.CASCADE, related_name='trenings')
     image = models.ImageField(upload_to='program/%Y/%m/%d', blank=True, verbose_name='Картинка')
     order = models.PositiveSmallIntegerField(default=0, verbose_name='Порядок')
     cansw = models.BooleanField(default=True, verbose_name='Отображать')
@@ -82,5 +84,5 @@ class m_Trening(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('main:product_list_by_trening', args=[self.slug])
+        return reverse('main:product_detail', args=[self.id, self.slug])
 # -------------------------------------------------------------------------------------------------- #

@@ -1,0 +1,36 @@
+{% load static %}
+{% load thumbnail %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% if category %}{{ category.name }}{% else %}Products{% endif %}</title>
+</head>
+<body>
+    <table>
+        <tbody>
+            {% for categ in categories %}
+                <tr>
+                    <td>
+                        {{ categ }}
+                        {% if categ.image %}
+                            <img src="{{ categ.image|thumbnail_url:'image' }}" alt="">
+                        {% else %}
+                            <img src="{% static 'img/no_image.png' %}" alt="">
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% for det in categ.trenings.all %}
+                            <li><a href="#">{{ det }}</a></li>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

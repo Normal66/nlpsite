@@ -3,27 +3,58 @@
 {% block title %}{{ user }}, welcome to!{% endblock %}
 
 {% block nlp_footer %}
-<nav>
-    <div class="kaumkan">ZORNET.RU</div>
-    <input type="checkbox" id="click">
-    <label for="click" class="menu-btn">
-        <i class="fas fa-bars"></i>
-    </label>
-    <ul>
-        <li><a class="active" href="#">Главная</a></li>
-        <li><a href="#">Файлы</a></li>
-        <li><a href="#">Скачать</a></li>
-        <li><a href="#">Скрипты</a></li>
-        <li><a href="#">Контакты</a></li>
-    </ul>
-</nav>
+    <nav>
+        <div class="kaumkan">ZORNET.RU</div>
+        <input type="checkbox" id="click">
+        <label for="click" class="menu-btn">
+            <i class="fas fa-bars"></i>
+        </label>
+        <ul>
+            <li><a class="active" href="#">Главная</a></li>
+            <li><a href="#">Файлы</a></li>
+            <li><a href="#">Скачать</a></li>
+            <li><a href="#">Скрипты</a></li>
+            <li><a href="#">Контакты</a></li>
+        </ul>
+    </nav>
 
-<div class="container-full-page brd">
-    <a href="{% url 'accounts:login' %}">Вход</a>
-    <a href="{% url 'accounts:logout' %}">Выход</a>
-    <a href="{% url 'accounts:register' %}">Регистрация</a>
-</div>
+    <div class="container-full-page brd">
+        <a href="{% url 'accounts:login' %}">Вход</a>
+        <a href="{% url 'accounts:logout' %}">Выход</a>
+        <a href="{% url 'accounts:register' %}">Регистрация</a>
+    </div>
 
+    {% include "utility/_menu.html" %}
+{% endblock %}
 
-{% include "utility/_menu.html" %}
+{% block nlp_main %}
+
+    <div id="sidebar">
+        <h3>Categories</h3>
+        <ul>
+            <li {% if not category %}class="selected"{% endif %}>
+                <a href="#">All</a>
+            </li>
+            {% for c in categories %}
+                <li {% if category.slug == c.slug %}class="selected"
+                    {% endif %}>
+                    <a href="#">{{ c.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="main" class="product-list">
+        <h1>{% if category %}{{ category.name }}{% else %}Products
+        {% endif %}</h1>
+        {% for product in products %}
+            <div class="item">
+                <a href="#">
+                    <img src="{% if product.image %}{{ product.image.url }}
+{%else %}{% static "img/no_image.png" %}{% endif %}"></a>
+                <a href="#">{{ product.name }}</a>
+                <br>
+                ${{ product.price }}
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
