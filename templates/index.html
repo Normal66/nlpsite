@@ -1,0 +1,29 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block title %}{{ user }}, welcome to!{% endblock %}
+
+{% block nlp_footer %}
+<nav>
+    <div class="kaumkan">ZORNET.RU</div>
+    <input type="checkbox" id="click">
+    <label for="click" class="menu-btn">
+        <i class="fas fa-bars"></i>
+    </label>
+    <ul>
+        <li><a class="active" href="#">Главная</a></li>
+        <li><a href="#">Файлы</a></li>
+        <li><a href="#">Скачать</a></li>
+        <li><a href="#">Скрипты</a></li>
+        <li><a href="#">Контакты</a></li>
+    </ul>
+</nav>
+
+<div class="container-full-page brd">
+    <a href="{% url 'accounts:login' %}">Вход</a>
+    <a href="{% url 'accounts:logout' %}">Выход</a>
+    <a href="{% url 'accounts:register' %}">Регистрация</a>
+</div>
+
+
+{% include "utility/_menu.html" %}
+{% endblock %}
